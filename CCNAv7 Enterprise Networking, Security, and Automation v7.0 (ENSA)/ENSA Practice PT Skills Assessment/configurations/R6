@@ -1,0 +1,27 @@
+enable
+configure terminal
+router ospf 10
+network 10.10.0.248 0.0.0.3 area 0
+network 10.10.0.244 0.0.0.3 area 0
+network 192.168.44.0 0.0.0.255 area 0
+network 192.168.55.0 0.0.0.255 area 0
+exit
+
+router ospf 10
+auto-cost reference-bandwidth 10000
+exit
+
+router ospf 10
+passive-interface g0/0/0
+passive-interface g0/0/1
+exit
+
+access-list 101 deny tcp any host 192.168.33.14 eq www
+access-list 101 permit ip any any 
+int g0/0/0
+ip access-group 101 in
+
+end
+copy running-config startup-config
+
+
