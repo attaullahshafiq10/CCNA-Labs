@@ -1,0 +1,16 @@
+PP-2>enable
+PP-2#show flash: 
+
+System flash directory:
+File  Length   Name/status
+  3   486899872isr4300-universalk9.03.16.05.S.155-3.S5-ext.SPA.bin
+  2   28282    sigdef-category.xml
+  1   227537   sigdef-default.xml
+[487155691 bytes used, 2761893909 available, 3249049600 total]
+3.17338e+06K bytes of processor board System flash (Read/Write)
+
+PP-2#copy flash tftp
+Source filename []? isr4300-universalk9.03.16.05.S.155-3.S5-ext.SPA.bin
+Address or name of remote host []? 192.168.33.14
+Destination filename [isr4300-universalk9.03.16.05.S.155-3.S5-ext.SPA.bin]? [Press Enter]
+
