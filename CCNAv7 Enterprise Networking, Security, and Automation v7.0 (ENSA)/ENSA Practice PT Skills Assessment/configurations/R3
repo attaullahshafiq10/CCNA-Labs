@@ -1,0 +1,32 @@
+enable 
+configure terminal 
+router ospf 10
+exit
+
+interface g0/0/0
+ip ospf 10 area 0
+interface g0/0/1
+ip ospf 10 area 0
+exit
+
+router ospf 10
+router-id 7.7.7.7
+exit
+
+router ospf 10
+auto-cost reference-bandwidth 10000
+exit
+
+router ospf 10
+passive-interface g0/0/0
+exit
+
+access-list 10 deny 192.168.11.0 0.0.0.255
+access-list 10 permit any
+int g0/0/1
+ip access-group 10 in
+exit
+
+end
+copy running-config startup-config
+
