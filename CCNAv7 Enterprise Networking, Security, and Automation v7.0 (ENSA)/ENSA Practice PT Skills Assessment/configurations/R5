@@ -1,0 +1,22 @@
+enable 
+configure terminal 
+router ospf 10
+network 10.10.0.240 0.0.0.3 area 0
+network 10.10.0.244 0.0.0.3 area 0
+network 192.168.33.0 0.0.0.15 area 0
+exit
+
+router ospf 10
+auto-cost reference-bandwidth 10000
+exit
+
+router ospf 10
+passive-interface g0/0/0
+exit
+
+ntp server 192.168.33.14
+exit
+
+copy running-config startup-config
+
+
