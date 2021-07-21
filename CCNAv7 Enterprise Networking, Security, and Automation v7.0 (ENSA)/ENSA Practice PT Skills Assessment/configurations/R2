@@ -1,0 +1,26 @@
+enable 
+configure terminal 
+router ospf 10
+exit 
+
+interface g0/0/0
+ip ospf 10 area 0
+interface g0/0/1
+ip ospf 10 area 0
+exit
+
+router ospf 10
+router-id 8.8.8.8
+exit
+
+router ospf 10
+auto-cost reference-bandwidth 10000
+exit
+
+router ospf 10
+passive-interface g0/0/0
+exit
+
+end
+copy running-config startup-config
+
