@@ -1,0 +1,61 @@
+enable 
+configure ter
+router ospf 10
+exit
+
+interface g0/0/0
+ip ospf 10 area 0
+interface s0/1/0
+ip ospf 10 area 0
+exit
+
+router ospf 10
+router-id 9.9.9.9
+exit
+
+int g0/0/0
+ip ospf priority 255
+exit
+ip route 0.0.0.0 0.0.0.0 s0/1/1
+router ospf 10
+default-information originate 
+exit
+
+int s0/1/0
+ip ospf hello-interval 20
+ip ospf dead-interval 80
+exit
+
+router ospf 10
+auto-cost reference-bandwidth 10000
+exit
+
+router ospf 10
+passive-interface s0/1/1
+exit
+
+ip nat inside source static 192.168.11.100 192.0.2.115
+int s0/1/1
+ip nat outside 
+int g0/0/0
+ip nat inside 
+exit
+
+access-list 1 permit 192.168.0.0 0.0.255.255
+ip nat pool POOL-1 192.0.2.116 192.0.2.118 netmask 255.255.255.248
+ip nat inside source list 1 pool POOL-1 overload 
+int s0/1/0
+ip nat inside
+exit
+
+ip access-list standard VTY-BLOCK
+permit 192.168.0.0 0.0.255.255
+deny any
+exit
+line vty 0 4
+access-class VTY-BLOCK in
+exit
+
+end
+copy running-config startup-config
+
