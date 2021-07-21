@@ -1,0 +1,28 @@
+enable 
+configure terminal 
+router ospf 10
+network 10.10.0.240 0.0.0.3 area 0
+network 10.10.0.236 0.0.0.3 area 0
+network 10.10.0.248 0.0.0.3 area 0
+exit
+
+int s0/2/0
+ip ospf hello-interval 20
+ip ospf dead-interval 80
+exit
+
+router ospf 10
+auto-cost reference-bandwidth 10000
+exit
+
+int s0/1/1
+ip ospf cost 50
+exit
+
+router ospf 10
+passive-interface g0/0/0
+exit
+
+end
+copy running-config startup-config
+
